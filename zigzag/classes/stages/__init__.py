@@ -13,6 +13,7 @@ from .SpatialMappingConversionStage import SpatialMappingConversionStage
 from .SpatialMappingGeneratorStage import SpatialMappingGeneratorStage
 from .Stage import Stage, MainStage
 from .TemporalOrderingConversionStage import TemporalOrderingConversionStage
+from .TemporalMappingConversionStage import TemporalMappingConversionStage
 from .WorkloadStage import WorkloadStage
 
 """

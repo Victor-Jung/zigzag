@@ -23,7 +23,7 @@ mainstage = MainStage([
     WorkloadStage,
     SpatialMappingGeneratorStage,
     MinimalLatencyStage,
-    SalsaStage,
+    TemporalMappingConversionStage,  # Converts the temporal ordering into a temporal mapping (TM)
     CostModelStage
 ],
     accelerator_path=args.accelerator,
@@ -34,7 +34,7 @@ mainstage = MainStage([
     loma_show_progress_bar=True,  # shows a progress bar while iterating over temporal mappings
     salsa_iteration_number=1000,
     salsa_start_temperature=0.05,
-    salsa_opt_criterion="energy",
+    salsa_opt_criterion="latency",
     salsa_number_of_core=8
 )
 

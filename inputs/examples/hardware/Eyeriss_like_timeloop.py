@@ -14,7 +14,7 @@ def memory_hierarchy_latency(multiplier_array):
     rf_inputs = MemoryInstance(name="rf_inputs", size=192, r_bw=16, w_bw=16, r_cost=0.237, w_cost=0.237, area=0.95, r_port=1, w_port=1, rw_port=1, latency=1) 
     rf_outputs = MemoryInstance(name="rf_outputs", size=256, r_bw=16, w_bw=16, r_cost=0.251, w_cost=0.251, area=0.95, r_port=1, w_port=1, rw_port=1, latency=1)
 
-    shared_buff = MemoryInstance(name="shared_buff", size=1048576, r_bw=64, w_bw=64, r_cost=75.22, w_cost=75.22, area=0.95, r_port=1, w_port=1, rw_port=1, latency=1)
+    shared_buff = MemoryInstance(name="shared_buff", size=1048576, r_bw=64, w_bw=64, r_cost=75.22, w_cost=75.22, area=0.95, r_port=1, w_port=1, rw_port=2, latency=1)
     top_dram = MemoryInstance(name="top_dram", size=100000000000, r_bw=64, w_bw=64, r_cost=512, w_cost=512, area=0.95, r_port=1, w_port=1, rw_port=1, latency=1)
 
     memory_hierarchy_graph = MemoryHierarchy(operational_array=multiplier_array)
@@ -36,7 +36,7 @@ def memory_hierarchy_latency(multiplier_array):
                                       port_alloc=({'fh': 'rw_port_1', 'tl': 'r_port_1', 'fl': 'w_port_1', 'th': 'rw_port_1'},),
                                       served_dimensions=set())
 
-    memory_hierarchy_graph.add_memory(memory_instance=shared_buff, operands=('I1', 'O'),xe
+    memory_hierarchy_graph.add_memory(memory_instance=shared_buff, operands=('I1', 'O'),
                                       port_alloc=({'fh': 'rw_port_1', 'tl': 'rw_port_2', 'fl': None, 'th': None},
                                                   {'fh': 'rw_port_1', 'tl': 'rw_port_2', 'fl': 'rw_port_2', 'th': 'rw_port_1'},),
                                       served_dimensions='all')
@@ -56,9 +56,9 @@ def multiplier_array_latency():
     multiplier_input_precision = [16, 16]
     multiplier_energy = 0.5
     multiplier_area = 0.1
-    dimensions = {'D1': 7, 'D2': 2, 'D3': 11} #{'D1': 14, 'D2': 12}
+    spatial_dimension = {'D1': 2, 'D2': 7, 'D3': 11}
     multiplier = Multiplier(multiplier_input_precision, multiplier_energy, multiplier_area)
-    multiplier_array = MultiplierArray(multiplier, dimensions)
+    multiplier_array = MultiplierArray(multiplier, spatial_dimension)
 
     return multiplier_array
 
