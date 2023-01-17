@@ -1,7 +1,7 @@
 workload = {
     0: {  # conv1, stride 2
         'equation': 'O[b][k][oy][ox]+=W[k][c][fy][fx]*I[b][c][ix][iy]',
-        'dimension_relations': ['ix=2*ox+1*fx', 'iy=2*oy+1*fy'],
+        'dimension_relations': ['ix=2*ox+1*fx', 'iy=2*oy+1*fy'], # Sx=2 Sx=2 Px=1 Py=1
         'loop_dim_size': {'B': 1, 'K': 64, 'C': 3, 'OY': 112, 'OX': 112, 'FY': 7, 'FX': 7},
         'operand_precision': {'O': 16, 'O_final': 8, 'W': 8, 'I': 8},
         'operand_source': {'W': [], 'I': []},
@@ -353,3 +353,4 @@ workload = {
         'memory_operand_links': {'O': 'O', 'W': 'I2', 'I': 'I1'}
     }
 }
+

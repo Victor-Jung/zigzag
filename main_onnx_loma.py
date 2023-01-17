@@ -1,33 +1,5 @@
-#   =====================================================================
-#   Title:        main_onnx_salsa.py
-#   Description:
-#  
-#   Date:        02.01.2023
-#  
-#   =====================================================================
-# 
-#   Copyright (C) 2020 ETH Zurich and University of Bologna.
-#  
-#   Author: Victor Jung, ETH Zurich
-#  
-#   SPDX-License-Identifier: Apache-2.0
-#  
-#   Licensed under the Apache License, Version 2.0 (the License); you may
-#   not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#  
-#   www.apache.org/licenses/LICENSE-2.0
-#  
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an AS IS BASIS, WITHOUT
-#   WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-#  
-
 from zigzag.classes.stages import *
 import argparse
-
 
 # Get the onnx model, the mapping and accelerator arguments
 parser = argparse.ArgumentParser(description="Setup zigzag inputs")
@@ -53,19 +25,15 @@ mainstage = MainStage([  # Initializes the MainStage as entry point
     WorkloadStage,  # Iterates through the different layers in the workload
     SpatialMappingGeneratorStage,  # Generates multiple spatial mappings (SM)
     MinimalLatencyStage,  # Reduces all CMEs, returning minimal latency one
-    SalsaStage,  # Find pseudo-optimal temporal mapping
+    LomaStage,  # Generates multiple temporal mappings (TM)
     CostModelStage  # Evaluates generated SM and TM through cost model
 ],
     accelerator=args.accelerator,  # required by AcceleratorParserStage
     onnx_model=args.model,  # required by ONNXModelParserStage
     mapping_path=args.mapping,  # required by ONNXModelParserStage
-    dump_filename_pattern="outputs/alexnet_salsa_{datetime}.json",  # output file save pattern
+    dump_filename_pattern="outputs/{datetime}.json",  # output file save pattern
     loma_lpf_limit=6,  # required by LomaStage
     loma_show_progress_bar=True,  # shows a progress bar while iterating over temporal mappings
-    salsa_iteration_number=1000,
-    salsa_start_temperature=0.05,
-    salsa_opt_criterion="energy",
-    salsa_number_of_core=8
 )
 
 # Launch the MainStage

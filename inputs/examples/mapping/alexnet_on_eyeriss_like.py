@@ -1,7 +1,7 @@
 mapping = {
     "Conv_nc_rename_0_quant": {
         "core_allocation": 1,
-        "spatial_mapping": {'D1': ('K', 16), 'D2': ('C', 3)},
+        "spatial_mapping": {'D1': ('OY', 7), 'D2': ('K', 2), 'D3': ('FY', 11)},
         "memory_operand_links": {'O': 'O', 'W': 'I2', 'I': 'I1'}
     },
     "Conv_nc_rename_4_quant": {

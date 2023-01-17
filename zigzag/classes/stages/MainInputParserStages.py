@@ -26,6 +26,10 @@ def parse_workload_from_path(workload_path):
     Parse the input workload residing in workload_path.
     The "workload" dict is converted to a NetworkX graph.
     """
+
+    import os
+
+    print(os.path.realpath(__file__))
     module = importlib.import_module(workload_path)
     workload = module.workload
     # Take only first dict element to start simple
